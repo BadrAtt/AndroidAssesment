@@ -7,6 +7,7 @@ buildscript {
         material_version = '1.4.0'
         constraint_layout_version = '2.1.0'
         navigation_version = '2.4.0-alpha07'
+        epoxy_version = '4.6.2'
 
         //plugins
         gradle_version = '7.0.1'
