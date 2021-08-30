@@ -14,6 +14,10 @@ buildscript {
         timber_version = '4.7.1'
         kotlinx_serialization_version = '1.2.1'
         kotlinx_serialization_converter_version = '0.8.0'
+        recycler_view_version = '1.2.1'
+        coroutines_version = '1.5.0'
+        live_data_ktx_version = '2.4.0-alpha03'
+        glide_version = '4.12.0'
 
         //plugins
         gradle_version = '7.0.1'

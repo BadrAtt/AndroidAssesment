@@ -1,6 +1,7 @@
 package com.elattaoui.moviedb.di
 
 import com.elattaoui.moviedb.networking.Api
+import com.elattaoui.moviedb.networking.DefaultQueryParamsInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.moczul.ok2curl.CurlInterceptor
 import dagger.Module
@@ -21,16 +22,19 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    internal fun providesOkHttp(): OkHttpClient {
+    internal fun providesOkHttp(
+        defaultQueryParamsInterceptor: DefaultQueryParamsInterceptor
+    ): OkHttpClient {
 
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(defaultQueryParamsInterceptor)
             .addInterceptor(CurlInterceptor {
                 Timber.d("Ok2Curl $it ")
             })
-            .addInterceptor(loggingInterceptor)
             .build()
 
     }
