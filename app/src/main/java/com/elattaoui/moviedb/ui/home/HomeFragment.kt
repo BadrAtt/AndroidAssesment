@@ -13,6 +13,7 @@ import com.elattaoui.moviedb.R
 import com.elattaoui.moviedb.databinding.FragmentHomeBinding
 import com.elattaoui.moviedb.networking.entity.MovieEntity
 import com.elattaoui.moviedb.networking.response.MoviesResult
+import com.elattaoui.moviedb.utils.GridEqualSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -83,6 +84,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setupRecyclerView() {
         binding.moviesRecycler.adapter = controller.adapter
         binding.moviesRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
+        val itemSpacing = resources.getDimension(R.dimen.movie_item_spacing)
+        val itemDecoration = GridEqualSpaceItemDecoration(itemSpacing.toInt())
+        if (binding.moviesRecycler.itemDecorationCount == 0) {
+            binding.moviesRecycler.addItemDecoration(itemDecoration)
+        }
     }
 
     private fun bindData(movies: List<MovieEntity>?) {
