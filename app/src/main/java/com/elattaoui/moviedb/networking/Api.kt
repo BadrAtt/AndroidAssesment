@@ -10,4 +10,10 @@ interface Api {
     suspend fun getPopularMovies(
         @Query("page") pageNumber: Int
     ): PageResponse
+
+    @GET("search/tv?sort_by=popularity.desc")
+    suspend fun searchMovies(
+        @Query("page") pageNumber: Int,
+        @Query("query") query: String
+    ): PageResponse
 }

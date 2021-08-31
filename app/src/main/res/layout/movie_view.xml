@@ -54,6 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:textColor="@color/white"
+            android:ellipsize="end"
+            android:maxLines="1"
             tools:text="Your life in April" />
 
     </LinearLayout>
