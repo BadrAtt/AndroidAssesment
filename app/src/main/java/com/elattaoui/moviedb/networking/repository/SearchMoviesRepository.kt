@@ -20,7 +20,12 @@ class SearchMoviesRepository @Inject constructor(
                     pageNumber = pageNumber,
                     query = query
                 )
-                emit(MoviesResult.Success(result.results))
+                emit(
+                    MoviesResult.Success(
+                        result.results?.sortedBy { movie ->
+                            movie.originalTitle
+                        })
+                )
             } catch (e: Exception) {
                 emit(MoviesResult.Error(e))
             }

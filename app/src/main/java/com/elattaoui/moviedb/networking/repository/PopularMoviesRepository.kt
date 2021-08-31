@@ -17,7 +17,12 @@ class PopularMoviesRepository @Inject constructor(
         return flow {
             try {
                 val result = api.getPopularMovies(pageNumber = pageNumber)
-                emit(MoviesResult.Success(result.results))
+                emit(
+                    MoviesResult.Success(
+                        result.results?.sortedBy { movie ->
+                            movie.originalTitle
+                        })
+                )
             } catch (e: Exception) {
                 emit(MoviesResult.Error(e))
             }
