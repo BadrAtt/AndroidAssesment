@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
  * https://gist.github.com/nesquena/d09dc68ff07e845cc622
  */
 abstract class EndlessRecyclerViewScrollListener(
-    private val layoutManager: RecyclerView.LayoutManager
+    private val layoutManager: GridLayoutManager
 ) : RecyclerView.OnScrollListener() {
 
     // The minimum amount of items to have below your current scroll position
@@ -29,9 +29,7 @@ abstract class EndlessRecyclerViewScrollListener(
 
 
     init {
-        if (layoutManager is GridLayoutManager) {
-            visibleThreshold *= layoutManager.spanCount
-        }
+        visibleThreshold *= layoutManager.spanCount
     }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -39,10 +37,8 @@ abstract class EndlessRecyclerViewScrollListener(
         var lastVisibleItemPosition = 0
         val totalItemCount: Int = layoutManager.itemCount
         if (totalItemCount >= visibleThreshold) {
-            if (layoutManager is GridLayoutManager) {
-                lastVisibleItemPosition =
-                    layoutManager.findLastVisibleItemPosition()
-            }
+            lastVisibleItemPosition =
+                layoutManager.findLastCompletelyVisibleItemPosition()
 
             // If the total item count is zero and the previous isn't, assume the
             // list is invalidated and should be reset back to initial state
@@ -76,12 +72,28 @@ abstract class EndlessRecyclerViewScrollListener(
             // the visibleThreshold and need to reload more data.
             // If we do need to reload some more data, we execute onLoadMore to fetch the data.
             // threshold should reflect how many total columns there are too
-            if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
+            if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount
+                && isLastItemDisplaying(recyclerView)
+            ) {
                 currentPage++
                 onLoadMore(currentPage)
                 loading = true
             }
         }
+    }
+
+    private fun isLastItemDisplaying(recyclerView: RecyclerView): Boolean {
+        recyclerView.adapter?.let { adapter ->
+            if (adapter.itemCount != 0) {
+                val lastVisibleItemPosition =
+                    layoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastVisibleItemPosition != RecyclerView.NO_POSITION
+                    && lastVisibleItemPosition == adapter.itemCount - 1
+                ) return true
+            }
+            return false
+        }
+        return false
     }
 
     // Defines the process for actually loading more data based on page
