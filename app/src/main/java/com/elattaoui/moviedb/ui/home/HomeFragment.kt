@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elattaoui.moviedb.R
+import com.elattaoui.moviedb.data.entity.MovieEntity
+import com.elattaoui.moviedb.data.response.MoviesResult
 import com.elattaoui.moviedb.databinding.FragmentHomeBinding
-import com.elattaoui.moviedb.networking.entity.MovieEntity
-import com.elattaoui.moviedb.networking.response.MoviesResult
 import com.elattaoui.moviedb.utils.EndlessRecyclerViewScrollListener
 import com.elattaoui.moviedb.utils.GridEqualSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint

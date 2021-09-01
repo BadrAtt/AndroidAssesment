@@ -1,9 +1,12 @@
-package com.elattaoui.moviedb.networking.entity
+package com.elattaoui.moviedb.data.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Entity(tableName = "MoviesDb")
 data class MovieEntity(
     @SerialName("backdrop_path")
     val backdropPath: String? = null,
@@ -11,6 +14,7 @@ data class MovieEntity(
     val firstAirDate: String? = null,
     @SerialName("genre_ids")
     val genreIds: List<Int>? = null,
+    @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val name: String? = null,
     @SerialName("origin_country")

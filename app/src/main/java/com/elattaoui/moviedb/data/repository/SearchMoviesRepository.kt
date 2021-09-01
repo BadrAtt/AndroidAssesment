@@ -1,7 +1,7 @@
-package com.elattaoui.moviedb.networking.repository
+package com.elattaoui.moviedb.data.repository
 
-import com.elattaoui.moviedb.networking.Api
-import com.elattaoui.moviedb.networking.response.MoviesResult
+import com.elattaoui.moviedb.data.Api
+import com.elattaoui.moviedb.data.response.MoviesResult
 import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -1,6 +1,6 @@
-package com.elattaoui.moviedb.networking
+package com.elattaoui.moviedb.data
 
-import com.elattaoui.moviedb.networking.response.PageResponse
+import com.elattaoui.moviedb.data.response.PageResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

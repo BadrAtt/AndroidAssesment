@@ -1,6 +1,6 @@
-package com.elattaoui.moviedb.networking.response
+package com.elattaoui.moviedb.data.response
 
-import com.elattaoui.moviedb.networking.entity.MovieEntity
+import com.elattaoui.moviedb.data.entity.MovieEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

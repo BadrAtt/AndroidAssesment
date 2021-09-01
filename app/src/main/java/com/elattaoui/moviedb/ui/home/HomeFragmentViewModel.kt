@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elattaoui.moviedb.networking.repository.PopularMoviesRepository
-import com.elattaoui.moviedb.networking.repository.SearchMoviesRepository
-import com.elattaoui.moviedb.networking.response.MoviesResult
+import com.elattaoui.moviedb.data.repository.PopularMoviesRepository
+import com.elattaoui.moviedb.data.repository.SearchMoviesRepository
+import com.elattaoui.moviedb.data.response.MoviesResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

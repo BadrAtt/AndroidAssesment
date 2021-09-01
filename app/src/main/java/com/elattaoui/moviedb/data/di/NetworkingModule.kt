@@ -1,7 +1,7 @@
-package com.elattaoui.moviedb.di
+package com.elattaoui.moviedb.data.di
 
-import com.elattaoui.moviedb.networking.Api
-import com.elattaoui.moviedb.networking.DefaultQueryParamsInterceptor
+import com.elattaoui.moviedb.data.Api
+import com.elattaoui.moviedb.data.DefaultQueryParamsInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.moczul.ok2curl.CurlInterceptor
 import dagger.Module

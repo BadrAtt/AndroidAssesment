@@ -1,4 +1,4 @@
-package com.elattaoui.moviedb.networking
+package com.elattaoui.moviedb.data
 
 import okhttp3.Interceptor
 import okhttp3.Response

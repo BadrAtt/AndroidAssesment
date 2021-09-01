@@ -1,7 +1,7 @@
 package com.elattaoui.moviedb.ui.home
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.elattaoui.moviedb.networking.entity.MovieEntity
+import com.elattaoui.moviedb.data.entity.MovieEntity
 import com.elattaoui.moviedb.ui.views.loaderView
 import com.elattaoui.moviedb.ui.views.movieView
 

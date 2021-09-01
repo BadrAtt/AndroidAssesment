@@ -7,8 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.bumptech.glide.Glide
+import com.elattaoui.moviedb.data.entity.MovieEntity
 import com.elattaoui.moviedb.databinding.MovieViewBinding
-import com.elattaoui.moviedb.networking.entity.MovieEntity
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class MovieView : ConstraintLayout {
