@@ -28,4 +28,11 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="MainNavigation" parent="Widget.Design.BottomNavigationView">
+        <item name="itemBackground">@color/orange</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+        <item name="android:background">@color/orange</item>
+    </style>
+
 </resources>
