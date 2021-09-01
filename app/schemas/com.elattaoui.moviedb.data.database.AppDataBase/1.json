@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8b4ba578e35a8cd38b3fef2ee590ea12",
+    "identityHash": "3d4e54a4010adf3ce0b33dbba7db5c50",
     "entities": [
       {
-        "tableName": "MoviesDb",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`backdropPath` TEXT, `firstAirDate` TEXT, `genreIds` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `originCountry` TEXT, `originalLanguage` TEXT, `originalTitle` TEXT, `overview` TEXT, `popularity` REAL, `posterPath` TEXT, `voteAverage` REAL, `voteCount` INTEGER)",
+        "tableName": "movies",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`backdropPath` TEXT, `firstAirDate` TEXT, `genreIds` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `originCountry` TEXT, `originalLanguage` TEXT, `originalTitle` TEXT, `overview` TEXT, `popularity` REAL, `posterPath` TEXT, `voteAverage` REAL, `voteCount` INTEGER, `isFavorite` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "backdropPath",
@@ -85,6 +85,12 @@
             "columnName": "voteCount",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -95,12 +101,116 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "favorites",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favoriteMovieId` INTEGER PRIMARY KEY AUTOINCREMENT, `backdropPath` TEXT, `firstAirDate` TEXT, `genreIds` TEXT, `id` INTEGER, `name` TEXT, `originCountry` TEXT, `originalLanguage` TEXT, `originalTitle` TEXT, `overview` TEXT, `popularity` REAL, `posterPath` TEXT, `voteAverage` REAL, `voteCount` INTEGER, `isFavorite` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "favoriteMovieId",
+            "columnName": "favoriteMovieId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.backdropPath",
+            "columnName": "backdropPath",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.firstAirDate",
+            "columnName": "firstAirDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.genreIds",
+            "columnName": "genreIds",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.originCountry",
+            "columnName": "originCountry",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.originalLanguage",
+            "columnName": "originalLanguage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.originalTitle",
+            "columnName": "originalTitle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.overview",
+            "columnName": "overview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.popularity",
+            "columnName": "popularity",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.posterPath",
+            "columnName": "posterPath",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.voteAverage",
+            "columnName": "voteAverage",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.voteCount",
+            "columnName": "voteCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "movie.isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "favoriteMovieId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8b4ba578e35a8cd38b3fef2ee590ea12')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d4e54a4010adf3ce0b33dbba7db5c50')"
     ]
   }
 }

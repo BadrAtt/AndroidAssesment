@@ -1,6 +1,8 @@
 package com.elattaoui.moviedb.data.converter
 
 import androidx.room.TypeConverter
+import com.elattaoui.moviedb.data.entity.FavoriteMovieEntity
+import kotlinx.serialization.json.Json
 
 class Converters {
 
@@ -48,5 +50,22 @@ class Converters {
     @TypeConverter
     fun getGenreIdsString(list: List<Int>): String {
         return list.joinToString(",")
+    }
+
+    @TypeConverter
+    fun getFavoriteMovieFromString(favoriteMovieString: String?): FavoriteMovieEntity? {
+        favoriteMovieString?.let {
+            return try {
+                Json.decodeFromString(FavoriteMovieEntity.serializer(), favoriteMovieString)
+            } catch (e: Exception) {
+                null
+            }
+        }
+        return null
+    }
+
+    @TypeConverter
+    fun getFavoriteMovieFromString(favoriteMovie: FavoriteMovieEntity?): String? {
+        return favoriteMovie?.toString()
     }
 }

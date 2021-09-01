@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Entity(tableName = "MoviesDb")
+@Entity(tableName = "movies")
 data class MovieEntity(
     @SerialName("backdrop_path")
     val backdropPath: String? = null,
@@ -30,5 +30,7 @@ data class MovieEntity(
     @SerialName("vote_average")
     val voteAverage: Double? = null,
     @SerialName("vote_count")
-    val voteCount: Int? = null
+    val voteCount: Int? = null,
+
+    var isFavorite: Boolean = false
 )

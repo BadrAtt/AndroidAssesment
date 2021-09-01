@@ -13,18 +13,19 @@ import com.elattaoui.moviedb.R
 import com.elattaoui.moviedb.data.entity.MovieEntity
 import com.elattaoui.moviedb.data.response.MoviesResult
 import com.elattaoui.moviedb.databinding.FragmentHomeBinding
+import com.elattaoui.moviedb.ui.views.MovieViewListener
 import com.elattaoui.moviedb.utils.EndlessRecyclerViewScrollListener
 import com.elattaoui.moviedb.utils.GridEqualSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), MovieViewListener {
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
     private lateinit var binding: FragmentHomeBinding
     private var moviesList = arrayListOf<MovieEntity>()
     private val controller by lazy {
-        MoviesController()
+        MoviesController(this)
     }
 
     override fun onCreateView(
@@ -61,6 +62,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.getPopularMovies(1)
         subscribe()
+    }
+
+    override fun onFavoriteBtnClicked(movie: MovieEntity) {
+        viewModel.handleFavoriteMovie(movie)
     }
 
     private fun subscribe() {

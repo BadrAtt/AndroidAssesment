@@ -2,6 +2,7 @@ package com.elattaoui.moviedb.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.elattaoui.moviedb.data.dao.FavoriteMoviesDAO
 import com.elattaoui.moviedb.data.dao.MoviesDAO
 import com.elattaoui.moviedb.data.database.AppDataBase
 import dagger.Module
@@ -26,7 +27,14 @@ object DataBaseModule {
     }
 
     @Provides
+    @Singleton
     fun provideMoviesDAO(appDataBase: AppDataBase): MoviesDAO {
         return appDataBase.moviesDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteMoviesDAO(appDataBase: AppDataBase): FavoriteMoviesDAO {
+        return appDataBase.favoriteMoviesDao()
     }
 }

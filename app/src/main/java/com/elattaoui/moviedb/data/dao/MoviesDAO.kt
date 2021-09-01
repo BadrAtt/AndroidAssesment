@@ -1,27 +1,17 @@
 package com.elattaoui.moviedb.data.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.elattaoui.moviedb.data.entity.MovieEntity
 
 @Dao
 interface MoviesDAO {
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(customEntity: MovieEntity)
+    fun insert(movie: MovieEntity)
 
-    @Update
-    fun update(customEntity: MovieEntity)
-
-    @Delete
-    fun delete(customEntity: MovieEntity)
-
-    @Query("DELETE FROM MoviesDb WHERE Id = :id")
-    fun deleteMovieById(id: Int?)
-
-    @Query("DELETE FROM MoviesDb")
-    fun deleteAll()
-
-    @Query("SELECT * FROM MoviesDb ORDER BY Id DESC")
+    @Query("SELECT * FROM movies ORDER BY Id DESC")
     fun getAll(): List<MovieEntity>?
 }

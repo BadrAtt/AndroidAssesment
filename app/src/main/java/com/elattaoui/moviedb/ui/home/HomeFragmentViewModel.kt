@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elattaoui.moviedb.data.repository.PopularMoviesRepository
+import com.elattaoui.moviedb.data.entity.MovieEntity
+import com.elattaoui.moviedb.data.repository.MoviesRepository
 import com.elattaoui.moviedb.data.repository.SearchMoviesRepository
 import com.elattaoui.moviedb.data.response.MoviesResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,17 +15,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
-    private val popularMoviesRepository: PopularMoviesRepository,
+    private val moviesRepository: MoviesRepository,
     private val searchMoviesRepository: SearchMoviesRepository
 ) : ViewModel() {
 
     private var moviesLiveData: MutableLiveData<MoviesResult> = MutableLiveData()
     val movies: LiveData<MoviesResult> = moviesLiveData
 
+    private var moviesList = mutableListOf<MovieEntity>()
+
     fun getPopularMovies(pageNumber: Int) {
         viewModelScope.launch {
-            popularMoviesRepository.fetchPopularMovies(pageNumber).collect { moviesResult ->
+            moviesRepository.fetchPopularMovies(pageNumber).collect { moviesResult ->
                 moviesLiveData.value = moviesResult
+                if (moviesResult is MoviesResult.Success) {
+                    moviesResult.data?.let {
+                        moviesList = moviesResult.data.toMutableList()
+                    }
+                }
             }
         }
     }
@@ -34,6 +42,22 @@ class HomeFragmentViewModel @Inject constructor(
             searchMoviesRepository.searchMovies(query).collect { result ->
                 moviesLiveData.value = result
             }
+        }
+    }
+
+    fun handleFavoriteMovie(movie: MovieEntity) {
+        viewModelScope.launch {
+            if (movie.isFavorite) {
+                moviesRepository.removeMovieFromFavorites(movie).collect {
+                    movie.isFavorite = it
+                }
+            } else {
+                moviesRepository.addMovieToFavorites(movie).collect {
+                    movie.isFavorite = it
+                }
+            }
+            moviesList.find { it.id == movie.id }?.isFavorite = movie.isFavorite
+            //todo: update view
         }
     }
 }
