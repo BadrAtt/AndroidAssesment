@@ -22,7 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
     private lateinit var binding: FragmentHomeBinding
-    var moviesList = arrayListOf<MovieEntity>()
+    private var moviesList = arrayListOf<MovieEntity>()
     private val controller by lazy {
         MoviesController()
     }

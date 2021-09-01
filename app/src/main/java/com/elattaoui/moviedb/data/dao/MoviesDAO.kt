@@ -1,6 +1,5 @@
 package com.elattaoui.moviedb.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.elattaoui.moviedb.data.entity.MovieEntity
 
@@ -23,6 +22,6 @@ interface MoviesDAO {
     @Query("DELETE FROM MoviesDb")
     fun deleteAll()
 
-    @Query("SELECT * FROM MoviesDb ORDER BY Id ASC")
-    fun getAll(): LiveData<List<MovieEntity>>
+    @Query("SELECT * FROM MoviesDb ORDER BY Id DESC")
+    fun getAll(): List<MovieEntity>?
 }
