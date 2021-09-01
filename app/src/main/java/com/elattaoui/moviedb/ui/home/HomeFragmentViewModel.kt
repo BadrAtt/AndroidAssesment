@@ -22,6 +22,9 @@ class HomeFragmentViewModel @Inject constructor(
     private var moviesLiveData: MutableLiveData<MoviesResult> = MutableLiveData()
     val movies: LiveData<MoviesResult> = moviesLiveData
 
+    private var searchMoviesLiveData: MutableLiveData<MoviesResult> = MutableLiveData()
+    val searchMovies: LiveData<MoviesResult> = searchMoviesLiveData
+
     private var moviesList = mutableListOf<MovieEntity>()
 
     fun getPopularMovies(pageNumber: Int) {
@@ -40,7 +43,7 @@ class HomeFragmentViewModel @Inject constructor(
     fun searchMovies(query: String) {
         viewModelScope.launch {
             searchMoviesRepository.searchMovies(query).collect { result ->
-                moviesLiveData.value = result
+                searchMoviesLiveData.value = result
             }
         }
     }

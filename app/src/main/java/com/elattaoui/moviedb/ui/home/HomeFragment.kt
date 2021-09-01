@@ -23,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieViewListener {
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
     private lateinit var binding: FragmentHomeBinding
-    private var moviesList = arrayListOf<MovieEntity>()
+    private var moviesList = mutableListOf<MovieEntity>()
     private val controller by lazy {
         MoviesController(this)
     }
@@ -54,6 +54,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieViewListener {
                     viewModel.searchMovies(newText)
                 }
                 if (newText.isBlank()) {
+                    moviesList.clear()
                     viewModel.getPopularMovies(1)
                 }
                 return true
@@ -73,6 +74,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieViewListener {
             when (moviesResult) {
                 is MoviesResult.Success -> {
                     bindData(moviesResult.data)
+                }
+                is MoviesResult.Loading -> {
+                }
+                is MoviesResult.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "something went wrong",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        })
+
+        viewModel.searchMovies.observe(viewLifecycleOwner, { moviesResult ->
+            when (moviesResult) {
+                is MoviesResult.Success -> {
+                    moviesResult.data?.let {
+                        controller.setData(moviesResult.data.toMutableList())
+                    }
+
                 }
                 is MoviesResult.Loading -> {
                 }
