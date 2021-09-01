@@ -13,6 +13,7 @@ import com.elattaoui.moviedb.R
 import com.elattaoui.moviedb.databinding.FragmentHomeBinding
 import com.elattaoui.moviedb.networking.entity.MovieEntity
 import com.elattaoui.moviedb.networking.response.MoviesResult
+import com.elattaoui.moviedb.utils.EndlessRecyclerViewScrollListener
 import com.elattaoui.moviedb.utils.GridEqualSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
     private lateinit var binding: FragmentHomeBinding
+    var moviesList = arrayListOf<MovieEntity>()
     private val controller by lazy {
         MoviesController()
     }
@@ -41,24 +43,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.moviesSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (query.isNotEmpty() && query.length > 2) {
-                    viewModel.searchMovies(query, 1)
+                    viewModel.searchMovies(query)
                 }
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
                 if (newText.isNotEmpty() && newText.length > 2) {
-                    viewModel.searchMovies(newText, 1)
+                    viewModel.searchMovies(newText)
                 }
                 if (newText.isBlank()) {
-                    viewModel.getPopularMovies()
+                    viewModel.getPopularMovies(1)
                 }
                 return true
             }
         })
 
-
-        viewModel.getPopularMovies()
+        viewModel.getPopularMovies(1)
         subscribe()
     }
 
@@ -82,16 +83,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupRecyclerView() {
-        binding.moviesRecycler.adapter = controller.adapter
-        binding.moviesRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
         val itemSpacing = resources.getDimension(R.dimen.movie_item_spacing)
         val itemDecoration = GridEqualSpaceItemDecoration(itemSpacing.toInt())
-        if (binding.moviesRecycler.itemDecorationCount == 0) {
-            binding.moviesRecycler.addItemDecoration(itemDecoration)
+        val recyclerViewLayoutManager = GridLayoutManager(requireContext(), 2).apply {
+            spanSizeLookup = controller.spanSizeLookup
+        }
+        binding.moviesRecycler.apply {
+            adapter = controller.adapter
+            layoutManager = recyclerViewLayoutManager
+            if (itemDecorationCount == 0) {
+                addItemDecoration(itemDecoration)
+            }
+            addOnScrollListener(object :
+                EndlessRecyclerViewScrollListener(recyclerViewLayoutManager) {
+                override fun onLoadMore(page: Int) {
+                    viewModel.getPopularMovies(page)
+                }
+            })
         }
     }
 
     private fun bindData(movies: List<MovieEntity>?) {
-        controller.setData(movies)
+        movies?.let {
+            moviesList.addAll(movies)
+            controller.setData(moviesList)
+        }
+
     }
 }

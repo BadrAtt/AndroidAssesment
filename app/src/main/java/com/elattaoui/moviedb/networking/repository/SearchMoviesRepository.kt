@@ -13,11 +13,10 @@ class SearchMoviesRepository @Inject constructor(
     private val api: Api
 ) {
 
-    fun searchMovies(query: String, pageNumber: Int): Flow<MoviesResult> {
+    fun searchMovies(query: String): Flow<MoviesResult> {
         return flow {
             try {
                 val result = api.searchMovies(
-                    pageNumber = pageNumber,
                     query = query
                 )
                 emit(

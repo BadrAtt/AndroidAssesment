@@ -21,17 +21,17 @@ class HomeFragmentViewModel @Inject constructor(
     private var moviesLiveData: MutableLiveData<MoviesResult> = MutableLiveData()
     val movies: LiveData<MoviesResult> = moviesLiveData
 
-    fun getPopularMovies() {
+    fun getPopularMovies(pageNumber: Int) {
         viewModelScope.launch {
-            popularMoviesRepository.fetchPopularMovies(1).collect { moviesResult ->
+            popularMoviesRepository.fetchPopularMovies(pageNumber).collect { moviesResult ->
                 moviesLiveData.value = moviesResult
             }
         }
     }
 
-    fun searchMovies(query: String, pageNumber: Int) {
+    fun searchMovies(query: String) {
         viewModelScope.launch {
-            searchMoviesRepository.searchMovies(query, pageNumber).collect { result ->
+            searchMoviesRepository.searchMovies(query).collect { result ->
                 moviesLiveData.value = result
             }
         }
